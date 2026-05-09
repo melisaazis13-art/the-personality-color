@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Personality Color 🌈</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --accent-color: #ff69b4;
+            --text-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.8s ease;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Overlay untuk efek animasi (api, hujan, dll) */
+        #visual-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-color);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: none;
+            background: var(--accent-color);
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        #status-msg {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        /* Animasi Api sederhana */
+        .fire-particle {
+            position: absolute;
+            bottom: 0;
+            background: orange;
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: rise 2s infinite ease-in;
+        }
+
+        @keyframes rise {
+            from { transform: translateY(0) scale(1); opacity: 1; }
+            to { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="visual-overlay"></div>
+
+    <div class="container">
+        <h1>Personality Color</h1>
+        <p>Ketik perasaanmu (Senang, Marah, Sedih, Semangat, Biasa, Tenang)</p>
+        
+        <input type="text" id="feelingInput" placeholder="Ketik di sini..." onkeypress="handleKeyPress(event)">
+        <br>
+        <button onclick="checkFeeling()">Detect Mood</button>
+
+        <div id="status-msg"></div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('visual-overlay');
+        const status = document.getElementById('status-msg');
+        const root = document.documentElement;
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') checkFeeling();
+        }
+
+        function checkFeeling() {
+            const val = document.getElementById('feelingInput').value.toLowerCase().trim();
+            overlay.innerHTML = ''; // Reset animasi
+            status.innerText = '';
+
+            if (val === 'senang') {
+                updateTheme('#FFD700', '#FFFACD', '✨ Kamu bersinar! Dunia ikut bahagia.');
+                createEmoji('⭐');
+            } 
+            else if (val === 'marah') {
+                updateTheme('#FF4500', '#2B0000', '🔥 Panas! Dinginkan hatimu, kawan.');
+                createFire();
+            } 
+            else if (val === 'sedih') {
+                updateTheme('#1E90FF', '#001F3F', '💧 Tidak apa-apa untuk menangis. Badai pasti berlalu.');
+                createEmoji('💧');
+            } 
+            else if (val === 'semangat') {
+                updateTheme('#FF69B4', '#1A0010', '💖 GASPOL! Kamu luar biasa hari ini!');
+                createEmoji('⚡');
+            } 
+            else if (val === 'biasa') {
+                updateTheme('#808080', '#121212', '⚪ Hari yang stabil. Nikmati ketenangan ini.');
+            } 
+            else if (val === 'tenang') {
+                updateTheme('#2ECC71', '#0B1A10', '🌿 Kedamaian adalah kunci kehidupan.');
+                createEmoji('🍃');
+            } 
+            else {
+                status.innerText = "❌ Kata tidak terdeteksi. Coba kata lain!";
+                status.style.color = "red";
+                updateTheme('#ff69b4', '#121212', '');
+            }
+        }
+
+        function updateTheme(accent, bg, msg) {
+            root.style.setProperty('--accent-color', accent);
+            root.style.setProperty('--bg-color', bg);
+            if(msg) {
+                status.innerText = msg;
+                status.style.color = accent;
+            }
+        }
+
+        function createEmoji(emoji) {
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');
+                span.innerText = emoji;
+                span.style.position = 'absolute';
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.top = '-50px';
+                span.style.fontSize = Math.random() * 20 + 20 + 'px';
+                span.style.animation = `drop ${Math.random() * 2 + 3}s linear infinite`;
+                span.style.opacity = Math.random();
+                overlay.appendChild(span);
+            }
+        }
+
+        function createFire() {
+            for (let i = 0; i < 50; i++) {
+                const fire = document.createElement('div');
+                fire.className = 'fire-particle';
+                fire.style.left = Math.random() * 100 + 'vw';
+                fire.style.width = fire.style.height = Math.random() * 50 + 'px';
+                fire.style.animationDelay = Math.random() * 2 + 's';
+                overlay.appendChild(fire);
+            }
+        }
+
+        // Tambahan CSS untuk animasi drop
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes drop {
+                to { transform: translateY(110vh); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
