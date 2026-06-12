@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembuatan Kue Donat</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ffe0b2,#fff3e0);
+    min-height:100vh;
+}
+
+header{
+    background:#ff9800;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+.container{
+    max-width:900px;
+    margin:30px auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom:20px;
+}
+
+h2{
+    color:#ff9800;
+    margin-bottom:10px;
+}
+
+ul,ol{
+    margin-left:20px;
+    line-height:1.8;
+}
+
+button{
+    background:#ff9800;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    margin-top:15px;
+}
+
+button:hover{
+    background:#f57c00;
+}
+
+#proses{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    color:#2e7d32;
+}
+
+.donut{
+    font-size:90px;
+    text-align:center;
+    margin:15px 0;
+}
+
+footer{
+    text-align:center;
+    padding:15px;
+    background:#ff9800;
+    color:white;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🍩 Pembuatan Kue Donat</h1>
+    <p>Belajar membuat donat lezat dengan langkah sederhana</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="donut">🍩</div>
+        <h2>Bahan-Bahan</h2>
+        <ul>
+            <li>500 gram tepung terigu</li>
+            <li>2 sendok makan gula pasir</li>
+            <li>1 butir telur</li>
+            <li>11 gram ragi instan</li>
+            <li>250 ml susu hangat</li>
+            <li>50 gram mentega</li>
+            <li>Minyak goreng secukupnya</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Langkah Pembuatan</h2>
+        <ol>
+            <li>Campurkan tepung, gula, dan ragi.</li>
+            <li>Masukkan telur dan susu hangat.</li>
+            <li>Uleni hingga setengah kalis.</li>
+            <li>Tambahkan mentega lalu uleni hingga kalis.</li>
+            <li>Diamkan adonan selama 45 menit.</li>
+            <li>Bentuk donat dan diamkan 15 menit.</li>
+            <li>Goreng hingga berwarna keemasan.</li>
+            <li>Tambahkan topping sesuai selera.</li>
+        </ol>
+
+        <button onclick="mulaiMembuatDonat()">
+            Mulai Membuat Donat
+        </button>
+
+        <p id="proses"></p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Website Edukasi Pembuatan Donat
+</footer>
+
+<script>
+const langkah = [
+    "🥣 Mencampurkan bahan...",
+    "🍶 Menambahkan susu dan telur...",
+    "💪 Menguleni adonan...",
+    "⏳ Mengembangkan adonan...",
+    "🍩 Membentuk donat...",
+    "🔥 Menggoreng donat...",
+    "🍫 Menambahkan topping...",
+    "🎉 Donat siap disajikan!"
+];
+
+let index = 0;
+
+function mulaiMembuatDonat() {
+    index = 0;
+    document.getElementById("proses").innerHTML = "";
+
+    let interval = setInterval(() => {
+        document.getElementById("proses").innerHTML = langkah[index];
+        index++;
+
+        if(index >= langkah.length){
+            clearInterval(interval);
+        }
+    }, 1200);
+}
+</script>
+
+</body>
+  </html>
